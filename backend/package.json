@@ -28,7 +28,6 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
     "backend": "file:",
-    "cache-manager": "^6.2.0",
     "ioredis": "^5.4.1",
     "pg": "^8.13.1",
     "redis": "^4.7.0",
