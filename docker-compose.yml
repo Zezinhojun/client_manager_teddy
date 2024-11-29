@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "${PORT_FRONT}:4200"
+    environment:
+      - API_URL=${API_URL}
     volumes:
       - ./frontend:/app
 
@@ -23,6 +25,8 @@ services:
      - POSTGRES_USER=${POSTGRES_USER:-user}
      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
      - POSTGRES_DB=${POSTGRES_DB:-teddy_db}
+     - REDIS_HOST=${REDIS_HOST:-redis}
+     - REDIS_PORT=${REDIS_PORT:-6379}
     depends_on:
       - teddy_db
       - redis

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CacheResponse } from '../store';
+import { environment } from '../../../environments/environment.development';
 
 
 @Injectable({
@@ -8,14 +9,14 @@ import { CacheResponse } from '../store';
 })
 export class AuthService {
   private readonly _http = inject(HttpClient)
-  private readonly apiUrl: string = "http://localhost:3000/cache"
+  private readonly apiUrl: string = environment.apiUrl
 
   getCache() {
-    return this._http.get<CacheResponse | null>(this.apiUrl)
+    return this._http.get<CacheResponse | null>(`${this.apiUrl}/cache`)
   }
 
   setCache(payload: { value: string }) {
-    return this._http.post<boolean>(this.apiUrl, payload)
+    return this._http.post<boolean>(`${this.apiUrl}/cache`, payload)
   }
 
 }
