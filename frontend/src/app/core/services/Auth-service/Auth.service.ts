@@ -17,4 +17,8 @@ export class AuthService {
   setCache(payload: { value: string }) {
     return this._http.post<boolean>(`${this.apiUrl}/cache`, payload)
   }
+
+  deleteCache() {
+    return this._http.delete<boolean>(`${this.apiUrl}/cache`)
+  }
 }

@@ -1,8 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MenuItens, NavbarComponent } from '../navbar/navbar.component';
 import { AuthStore } from '../../app/core/store';
+import { first, interval, of, switchMap } from 'rxjs';
+import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,6 +15,8 @@ import { AuthStore } from '../../app/core/store';
 })
 export class MainLayoutComponent {
   authStore = inject(AuthStore)
+  _snackbarSvc = inject(SnackbarService)
+  router = inject(Router)
   toogleMenu = signal<boolean>(false)
   navItens = signal<MenuItens[]>([
     {
@@ -36,19 +40,45 @@ export class MainLayoutComponent {
     switch (action) {
       case 'clients':
         console.log('clients')
-        break
+        return
       case 'clientsList':
         console.log('clientsList');
-        break;
+        return
       case 'logout':
-        console.log('logout');
-        break;
+        return this.handleLogout().subscribe({
+          next: success => {
+            if (success) {
+              this.router.navigate(['/home'])
+            }
+          },
+          error: (err) => {
+            console.error('Logout process error', err);
+          }
+        })
       default:
         console.log("Escolha uma opção certa")
+        return
     }
   }
 
   onSideMenuToggle(): void {
     this.toogleMenu.update(state => !state);
+  }
+
+  private handleLogout() {
+    this.authStore.logout()
+    return interval(100).pipe(
+      switchMap(async () => this.authStore.loading()),
+      first(loading => !loading),
+      switchMap(() => {
+        if (!this.authStore.isLoggedIn()) {
+          this._snackbarSvc.show('Logout realizado com sucesso', 'Fechar');
+          return of(true);
+        } else {
+          this._snackbarSvc.show('Erro ao realizar logout', 'Fechar');
+          return of(false);
+        }
+      }),
+    )
   }
 }

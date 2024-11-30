@@ -16,7 +16,7 @@
       </ul>
     </nav>
     <p class="greeting">Olá,
-      <b>{{username()}}</b>
+      <b>{{username() ?? "" | twoFirstNames| titlecase }} </b>
     </p>
   </div>
   <div class="right-nav">

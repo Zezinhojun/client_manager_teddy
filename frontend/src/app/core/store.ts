@@ -29,13 +29,13 @@ export const AuthStore = signalStore(
     hasError: computed(() => error() !== null),
   })),
 
-  withMethods((store, authService = inject(AuthService)) => ({
+  withMethods((store, _authSvc = inject(AuthService)) => ({
 
     setCache: rxMethod<string>(
       pipe(
         tap(() => patchState(store, { loading: true })),
         switchMap((username) =>
-          authService.setCache({ value: username }).pipe(
+          _authSvc.setCache({ value: username }).pipe(
             tapResponse({
               next: (result: boolean) => {
                 patchState(store, {
@@ -60,7 +60,7 @@ export const AuthStore = signalStore(
       pipe(
         tap(() => { patchState(store, { loading: true }) }),
         switchMap(() =>
-          authService.getCache()
+          _authSvc.getCache()
             .pipe(
               tapResponse({
                 next: (result: CacheResponse | null) => {
@@ -89,6 +89,36 @@ export const AuthStore = signalStore(
             ))
       )
     ),
+
+    logout: rxMethod<void>(
+      pipe(
+        tap(() => {
+          console.log('Logout iniciado');
+          patchState(store, { loading: true })
+        }
+        ),
+        switchMap(() => {
+          return _authSvc.deleteCache()
+            .pipe(
+              tapResponse({
+                next: () => {
+                  patchState(store, {
+                    username: null,
+                    loading: false,
+                    error: 'logout error'
+                  })
+                },
+                error: (err: Error) => {
+                  patchState(store, {
+                    loading: false,
+                    error: err.message || 'Logout error'
+                  })
+                }
+              })
+            )
+        })
+      )
+    )
   })),
   withHooks({
     onInit(store) {

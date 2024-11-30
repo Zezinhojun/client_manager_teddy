@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { TwoFirstNamesPipe } from '../../app/core/pipes/two-first-names.pipe';
 
 export type MenuItens = { label: string, active: boolean, action: string }
 
@@ -17,7 +18,8 @@ export type MenuItens = { label: string, active: boolean, action: string }
     MatToolbarModule,
     MatListModule,
     CommonModule,
-    MatGridListModule],
+    MatGridListModule,
+    TwoFirstNamesPipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
