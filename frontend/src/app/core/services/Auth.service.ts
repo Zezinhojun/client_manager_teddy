@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { CacheResponse } from '../store';
 import { environment } from '../../../environments/environment.development';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,5 +17,4 @@ export class AuthService {
   setCache(payload: { value: string }) {
     return this._http.post<boolean>(`${this.apiUrl}/cache`, payload)
   }
-
 }

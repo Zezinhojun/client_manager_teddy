@@ -21,7 +21,6 @@ const initialState: AuthState = {
   error: null
 }
 
-
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
@@ -31,6 +30,7 @@ export const AuthStore = signalStore(
   })),
 
   withMethods((store, authService = inject(AuthService)) => ({
+
     setCache: rxMethod<string>(
       pipe(
         tap(() => patchState(store, { loading: true })),
@@ -64,7 +64,7 @@ export const AuthStore = signalStore(
             .pipe(
               tapResponse({
                 next: (result: CacheResponse | null) => {
-                  if (result) {
+                  if (result?.value) {
                     patchState(store, {
                       username: result.value,
                       loading: false,
