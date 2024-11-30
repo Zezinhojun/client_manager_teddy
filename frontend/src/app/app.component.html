@@ -1,4 +1,4 @@
-@defer (when authStore.loading()) {
+@defer (on idle) {
 <router-outlet />
 }@placeholder {
 <div class="spinner-container">

@@ -1,0 +1,3 @@
+<app-navbar (sideMenu)="onSideMenuToggle()" [navItens]="navItens()" [username]="authStore.username()"
+  (menuItemClick)="onMenuClick($event)" />
+<router-outlet />

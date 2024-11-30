@@ -1,0 +1,24 @@
+<mat-toolbar class="navbar">
+  <div class="left-nav">
+    <button (click)="sideMenu.emit(true)" mat-icon-button aria-label="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div class="center-nav">
+    <img src="assets/logo-teddy.png" alt="Logo" class="logo" height="50px" width="100px">
+    <nav>
+      <ul class="nav-list">
+        @for (item of navItens(); track $index) {
+        <li class="nav-list-item" [ngClass]="{'active': item.active}" (click)="menuItemClick.emit(item.action)">
+          {{item.label}}
+        </li>
+        }
+      </ul>
+    </nav>
+    <p class="greeting">Olá,
+      <b>{{username()}}</b>
+    </p>
+  </div>
+  <div class="right-nav">
+  </div>
+</mat-toolbar>
