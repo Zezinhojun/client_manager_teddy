@@ -2,7 +2,7 @@ import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
-import { AuthService } from './services/Auth.service';
+import { AuthService } from './services/Auth-service/Auth.service';
 import { tapResponse } from '@ngrx/operators';
 
 export type CacheResponse = {

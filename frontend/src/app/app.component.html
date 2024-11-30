@@ -1,1 +1,7 @@
+@defer (when authStore.loading()) {
 <router-outlet />
+}@placeholder {
+<div class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+}

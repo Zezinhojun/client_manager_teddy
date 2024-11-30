@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -28,31 +29,36 @@ import {
   styleUrl: './home.component.css'
 })
 export default class HomeComponent implements OnInit {
-  public authStore = inject(AuthStore)
-  public router = inject(Router)
+  private readonly router = inject(Router)
   private readonly fb = inject(FormBuilder)
-  form!: FormGroup
+  private readonly snackbar = inject(SnackbarService)
+  public authStore = inject(AuthStore)
+  public form!: FormGroup
 
   ngOnInit(): void {
     this.initialForm()
   }
 
-  private initialForm() {
+  private initialForm(): void {
     this.form = this.fb.group({
       username: ['', Validators.required]
     })
   }
 
-  defineCache() {
+  defineCache(): void {
     if (this.form.valid) {
       this.authStore.setCache(this.form.get('username')?.value);
       interval(100).pipe(
         switchMap(async () => this.authStore.loading()),
         first(loading => !loading),
-        switchMap(() => {
-          return this.authStore.isLoggedIn()
-            ? this.router.navigate(['/dashboard'])
-            : this.router.navigate(['/home']);
+        switchMap(async () => {
+          if (this.authStore.isLoggedIn()) {
+            this.snackbar.show('Login bem sucedido!', 'Fechar')
+            return this.router.navigate(['/dashboard'])
+          } else {
+            this.snackbar.show('Falha no login, tente novamente.', 'Fechar')
+            return this.router.navigate(['/home']);
+          }
         })
       ).subscribe();
     } else {
