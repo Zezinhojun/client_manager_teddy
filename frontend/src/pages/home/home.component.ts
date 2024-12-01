@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthStore } from '../../app/core/store';
+import { AuthStore } from '../../app/core/stores/AuthStore';
 import { first, interval, switchMap } from 'rxjs';
 import {
   FormBuilder,

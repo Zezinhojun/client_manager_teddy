@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { Client } from '../../store';
 import { AngularMaterialModule } from '../../../shared/angular-material/angular-material.module';
+import { Client } from '../../stores/ClientStore';
 
 @Component({
   selector: 'app-client-card',

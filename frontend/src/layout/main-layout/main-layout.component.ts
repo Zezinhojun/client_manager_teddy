@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { MenuItens, NavbarComponent } from '../navbar/navbar.component';
-import { AuthStore } from '../../app/core/store';
+import { AuthStore } from '../../app/core/stores/AuthStore';
 import { first, interval, of, switchMap } from 'rxjs';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';

@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { AuthStore, ClientStore } from '../../app/core/store';
+import { Component, inject, OnInit } from '@angular/core';
+import { AuthStore } from '../../app/core/stores/AuthStore';
 
 import { ClientCardComponent } from "../../app/core/components/client-card/client-card.component";
 import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
+import { ClientStore } from '../../app/core/stores/ClientStore';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +14,18 @@ import { AngularMaterialModule } from '../../app/shared/angular-material/angular
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export default class DashboardComponent {
+export default class DashboardComponent implements OnInit {
   authStore = inject(AuthStore)
   clientStore = inject(ClientStore)
+
+
+  ngOnInit(): void {
+    this.loadClients()
+  }
+
+  private loadClients() {
+    this.clientStore.getClients();
+  }
 
   handleAction(action: string) {
     switch (action) {

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthStore } from './core/store';
+import { AuthStore } from './core/stores/AuthStore';
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 
 @Component({

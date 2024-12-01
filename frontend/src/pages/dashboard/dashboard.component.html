@@ -2,7 +2,7 @@
   <div class="l-dashboard"></div>
   <div class="c-dashboard">
     <div class="legend-list-card">
-      <p>N clientes encontrados:</p>
+      <p><b>{{clientStore.totalClients()}}</b> clientes encontrados:</p>
       <p>Clientes por página: Num</p>
     </div>
     <app-client-card [clients]="clientStore.clients()" [totalClients]="clientStore.totalClients()"
