@@ -1,8 +1,8 @@
-export class EmployeeResponseDTO {
+export class ClientResponseDTO {
     id: number;
     name: string;
     salary: number;
-    companyId?: number;
+    companyValue: number;
     createAt: Date;
     updateAt: Date;
 }

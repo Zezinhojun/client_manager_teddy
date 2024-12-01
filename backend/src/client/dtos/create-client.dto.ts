@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsString, IsNumber, MaxLength, IsOptional, Min } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, MaxLength, Min } from 'class-validator';
 
-export class CreateEmployeeDTO {
+export class CreateClientDTO {
     @IsNotEmpty({ message: 'Name is required' })
     @IsString()
     @MaxLength(255, { message: 'Name cannot exceed 255 characters' })
@@ -11,7 +11,8 @@ export class CreateEmployeeDTO {
     @Min(0, { message: 'Salary must be at least 0' })
     salary: number;
 
-    @IsOptional()
-    @IsNumber({}, { message: 'Company ID must be a valid number' })
-    companyId: number;
+    @IsNotEmpty({ message: 'Company value is required' })
+    @IsNumber({}, { message: 'Company value must be a valid number' })
+    companyValue: number;
+
 }
