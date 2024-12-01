@@ -1,16 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterOutlet } from '@angular/router';
 import { MenuItens, NavbarComponent } from '../navbar/navbar.component';
 import { AuthStore } from '../../app/core/store';
 import { first, interval, of, switchMap } from 'rxjs';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
+import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
 
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet, MatProgressSpinnerModule, NavbarComponent],
+  imports: [
+    RouterOutlet,
+    AngularMaterialModule,
+    NavbarComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })

@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthStore } from './core/store';
+import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatProgressSpinnerModule],
+  imports: [RouterOutlet, AngularMaterialModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

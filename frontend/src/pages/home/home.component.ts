@@ -2,10 +2,6 @@ import { Router } from '@angular/router';
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthStore } from '../../app/core/store';
 import { first, interval, switchMap } from 'rxjs';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button'
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import {
   FormBuilder,
   FormGroup,
@@ -14,16 +10,14 @@ import {
   Validators
 } from '@angular/forms';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
+import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
+    AngularMaterialModule,
     FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

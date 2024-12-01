@@ -1,11 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
-import { CommonModule } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { TwoFirstNamesPipe } from '../../app/core/pipes/two-first-names.pipe';
+import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
 
 export type MenuItens = { label: string, active: boolean, action: string }
 
@@ -13,12 +8,7 @@ export type MenuItens = { label: string, active: boolean, action: string }
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatListModule,
-    CommonModule,
-    MatGridListModule,
+    AngularMaterialModule,
     TwoFirstNamesPipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
