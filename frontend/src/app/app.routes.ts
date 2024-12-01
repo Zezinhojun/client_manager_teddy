@@ -1,13 +1,18 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/Auth.guard';
 import { AppComponent } from './app.component';
-import { MainLayoutComponent } from '../layout/main-layout/main-layout.component';
+import MainLayoutComponent from '../layout/main-layout/main-layout.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: AppComponent,
     children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
       {
         path: 'home',
         loadComponent: () => import('./../pages/home/home.component'),
@@ -28,6 +33,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: '', redirectTo: '/home', pathMatch: 'full'
+    path: '**',
+    redirectTo: 'home'
   }
 ];

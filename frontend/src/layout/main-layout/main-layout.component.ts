@@ -6,6 +6,7 @@ import { AuthStore } from '../../app/core/store';
 import { first, interval, of, switchMap } from 'rxjs';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 
+
 @Component({
   selector: 'app-main-layout',
   standalone: true,
@@ -13,7 +14,7 @@ import { SnackbarService } from '../../app/core/services/Snackbar-service/snackb
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })
-export class MainLayoutComponent {
+export default class MainLayoutComponent {
   authStore = inject(AuthStore)
   _snackbarSvc = inject(SnackbarService)
   router = inject(Router)
@@ -67,7 +68,7 @@ export class MainLayoutComponent {
 
   private handleLogout() {
     this.authStore.logout()
-    return interval(100).pipe(
+    return interval(10).pipe(
       switchMap(async () => this.authStore.loading()),
       first(loading => !loading),
       switchMap(() => {

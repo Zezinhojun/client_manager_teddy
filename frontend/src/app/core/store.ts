@@ -15,15 +15,16 @@ export interface AuthState {
   error: string | null;
 }
 
-const initialState: AuthState = {
+const initialAuthState: AuthState = {
   username: null,
   loading: false,
   error: null
 }
 
 export const AuthStore = signalStore(
+
   { providedIn: 'root' },
-  withState(initialState),
+  withState(initialAuthState),
   withComputed(({ username, error }) => ({
     isLoggedIn: computed(() => { return !!username() }),
     hasError: computed(() => error() !== null),
@@ -126,3 +127,37 @@ export const AuthStore = signalStore(
     },
   }),
 );
+
+
+export interface Client {
+  name: string;
+  empresa: string;
+  salario: string
+}
+
+interface ClientState {
+  clients: Client[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialClientState: ClientState = {
+  clients: [
+    { name: 'Alice', empresa: '300000', salario: '5000' },
+    { name: 'Bob', empresa: '98800', salario: '4500' },
+    { name: 'Charlie', empresa: '400000', salario: '6000' },
+    { name: 'Diana', empresa: '1000000', salario: '7000' },
+    { name: 'Eve', empresa: '200000', salario: '5500' }
+  ],
+  loading: false,
+  error: null,
+};
+
+export const ClientStore = signalStore(
+  { providedIn: 'root' },
+  withState(initialClientState),
+  withComputed(({ clients, error }) => ({
+    totalClients: computed(() => clients().length)
+  })),
+
+)
