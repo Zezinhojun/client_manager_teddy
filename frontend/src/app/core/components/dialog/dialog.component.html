@@ -1,0 +1,45 @@
+<mat-dialog-content>
+  <div class="dialog-header">
+    <h2 class="dialog-title start">{{ dialogTitle }}:</h2>
+    <button (click)="onCancel()" class="end">
+      <mat-icon>
+        close
+      </mat-icon>
+    </button>
+  </div>
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" placeholder="Digite o nome">
+      @if (clientForm.get('name')) {
+      <mat-error>
+        Nome é obrigatório
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Salário</mat-label>
+      <input matInput type="number" formControlName="salary" placeholder="Digite o salário">
+      @if (clientForm.get('salary')?.invalid) {
+      <mat-error>
+        Salário é obrigatório e deve ser positivo
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Valor da Empresa</mat-label>
+      <input matInput type="number" formControlName="companyValue" placeholder="Digite o valor da empresa">
+      @if (clientForm.get('companyValue')?.invalid) {
+      <mat-error>
+        Valor da empresa é obrigatório
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button type="submit" class="save-btn" [disabled]="clientForm.invalid">Criar cliente</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
