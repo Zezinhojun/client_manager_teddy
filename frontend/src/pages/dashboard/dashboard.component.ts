@@ -2,9 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthStore } from '../../app/core/stores/AuthStore';
 import { ClientCardComponent } from "../../app/core/components/client-card/client-card.component";
 import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
-import { ClientStore } from '../../app/core/stores/ClientStore';
+import { Client, ClientStore } from '../../app/core/stores/ClientStore';
 import { DialogComponent } from '../../app/core/components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { catchError, first, interval, of, switchMap } from 'rxjs';
+import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export default class DashboardComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
+  private readonly _snackbarSvc = inject(SnackbarService)
   authStore = inject(AuthStore)
   clientStore = inject(ClientStore)
 
@@ -29,24 +32,7 @@ export default class DashboardComponent implements OnInit {
     this.clientStore.getClients();
   }
 
-  handleAction(action: string) {
-    switch (action) {
-      case 'add':
-        this.openDialog()
-        console.log("Clicado add")
-        return
-      case 'edit':
-        console.log("Clicado edit")
-        return
-      case 'remove':
-        console.log("Clicado remove")
-        return
-      default:
-        console.log("CLICK ERRADO")
-        return
-    }
-  }
-  openDialog(): void {
+  openCreateDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
       data: { title: 'Criar cliente', buttonTitle: "Criar cliente" },
@@ -60,4 +46,41 @@ export default class DashboardComponent implements OnInit {
       }
     });
   }
+  openEditDialog(client: Client): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: { title: 'Editar cliente', buttonTitle: "Editar cliente" },
+      panelClass: 'custom-modalBox',
+    });
+
+    console.log(client)
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Formulário recebido:', result);
+      }
+    });
+  }
+
+  removeClient(client: Client) {
+    if (client.id) {
+      this.clientStore.removeClient(client.id)
+      interval(100).pipe(
+        switchMap(async () => this.clientStore.loading()),
+        first(loading => !loading),
+        switchMap(async () => {
+          this._snackbarSvc.show('Cliente removido com sucesso!', 'Fechar');
+          return of(null);
+        }),
+        catchError(err => {
+          this._snackbarSvc.show('Erro ao remover cliente. Tente novamente.', 'Fechar')
+          return of(null);
+        })
+      )
+        .subscribe()
+    }
+  }
+
+
 }

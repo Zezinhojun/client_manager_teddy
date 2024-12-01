@@ -50,6 +50,18 @@ mat-card-content p {
   justify-content: space-between;
 }
 
+.action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer
+}
+
+.action-btn:hover {
+  color: #d9531e;
+}
+
+
 button {
   display: flex;
   justify-content: center;
@@ -73,7 +85,8 @@ mat-icon .remove {
 
 .delete-icon {
   color: #EC6724;
-  width: 40px;
-  height: 40px;
+}
 
+.delete-icon:hover {
+  color: #d9531e
 }

@@ -10,18 +10,18 @@
     </mat-card-content>
     <mat-card-footer class="card-footer">
       <div class="card-action-btn">
-        <button mat-icon-button>
-          <mat-icon matChipRemove (click)="onAddClick.emit('add')">
+        <button class="action-btn">
+          <mat-icon matChipRemove (click)="onAddClick.emit()">
             add
           </mat-icon>
         </button>
-        <button mat-icon-button>
-          <mat-icon matChipRemove (click)="onEditClick.emit('edit')">
+        <button class="action-btn">
+          <mat-icon matChipRemove (click)="onEditClick.emit(client)">
             edit
           </mat-icon>
         </button>
-        <button mat-icon-button>
-          <mat-icon matChipRemove (click)="onRemoveClick.emit('remove')" class="delete-icon">
+        <button class="action-btn">
+          <mat-icon matChipRemove (click)="onRemoveClick.emit(client)" class="delete-icon">
             delete
           </mat-icon>
         </button>

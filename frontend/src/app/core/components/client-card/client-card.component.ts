@@ -12,7 +12,7 @@ import { Client } from '../../stores/ClientStore';
 export class ClientCardComponent {
   totalClients = input<number>()
   clients = input<Client[]>([])
-  onAddClick = output<string>()
-  onEditClick = output<string>()
-  onRemoveClick = output<string>()
+  onAddClick = output()
+  onEditClick = output<Client>()
+  onRemoveClick = output<Client>()
 }

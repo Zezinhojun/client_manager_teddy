@@ -6,6 +6,7 @@ import { pipe, tap, switchMap } from "rxjs";
 import { ClientService } from "../services/Client-service/client.service";
 
 export interface Client {
+  id?: string
   name: string;
   salary: string;
   companyValue: string
@@ -58,7 +59,34 @@ export const ClientStore = signalStore(
             )
         )
       )
-    )
+    ),
+
+    removeClient: rxMethod<string>(
+      pipe(
+        tap(() => {
+          patchState(store, { loading: true });
+        }),
+        switchMap((clientId) =>
+          _clientSvc.removeClient(clientId).pipe(
+            tapResponse({
+              next: () => {
+                patchState(store, {
+                  clients: store.clients().filter(client => client.id !== clientId),
+                  loading: false,
+                  error: null
+                });
+              },
+              error: (err: Error) => {
+                patchState(store, {
+                  loading: false,
+                  error: err.message || 'Erro ao remover cliente'
+                });
+              }
+            })
+          )
+        )
+      )
+    ),
 
   }))
 

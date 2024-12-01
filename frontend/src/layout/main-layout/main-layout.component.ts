@@ -6,7 +6,6 @@ import { first, interval, of, switchMap } from 'rxjs';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
 
-
 @Component({
   selector: 'app-main-layout',
   standalone: true,

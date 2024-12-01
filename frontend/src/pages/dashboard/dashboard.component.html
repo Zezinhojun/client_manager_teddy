@@ -6,9 +6,9 @@
       <p>Clientes por página: Num</p>
     </div>
     <app-client-card [clients]="clientStore.clients()" [totalClients]="clientStore.totalClients()"
-      (onAddClick)="handleAction($event)" (onEditClick)="handleAction($event)" (onRemoveClick)="handleAction($event)" />
+      (onAddClick)="openCreateDialog()" (onEditClick)="openEditDialog($event)" (onRemoveClick)="removeClient($event)" />
     <div>
-      <button class="create-client">Criar cliente</button>
+      <button (click)="openCreateDialog()" class="create-client">Criar cliente</button>
     </div>
   </div>
   <div class="r-dashboard"></div>

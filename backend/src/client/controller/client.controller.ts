@@ -1,4 +1,4 @@
-import { Crud, CrudController, Override } from "@dataui/crud";
+import { Crud, CrudController, CrudRequest, Override, ParsedRequest } from "@dataui/crud";
 import { Body, Controller, Post, ValidationPipe } from "@nestjs/common";
 import { Client } from "../entity/client.entity";
 import { CreateClientDTO } from "../dtos/create-client.dto";
@@ -41,5 +41,13 @@ export class ClientsController implements CrudController<Client> {
         const clientsFromDb = await this.service.find()
         await this.redisService.set('clients', clientsFromDb, 2 * 60 * 60)
         return clientsFromDb
+    }
+
+    @Override('deleteOneBase')
+    async deleteOne(
+        @ParsedRequest() req: CrudRequest,
+    ): Promise<void> {
+        await this.service.deleteOne(req);
+        await this.redisService.delete('clients');
     }
 }
