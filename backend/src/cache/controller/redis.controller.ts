@@ -3,23 +3,24 @@ import { RedisService } from '../service/redis.service';
 
 @Controller('cache')
 export class RedisController {
+    private readonly key = 'username';
     constructor(private readonly redisService: RedisService) { }
 
     @Post()
     async setCache(@Body() body: { value: string }) {
-        await this.redisService.set(body.value);
+        await this.redisService.set(this.key, body.value, 2 * 60 * 60);
         return true;
     }
 
     @Get()
     async getCache() {
-        const value = await this.redisService.get();
+        const value = await this.redisService.get(this.key);
         return { value };
     }
 
     @Delete()
     async deleteCache() {
-        await this.redisService.delete();
+        await this.redisService.delete(this.key);
         return { message: 'Valor deletado do cache' };
     }
 }
