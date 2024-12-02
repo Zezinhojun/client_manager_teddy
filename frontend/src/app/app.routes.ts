@@ -30,6 +30,12 @@ export const routes: Routes = [
         loadComponent: () => import('./../pages/dashboard/dashboard.component'),
         canActivate: [AuthGuard],
       },
+
+      {
+        path: 'clientlist',
+        loadComponent: () => import('./../pages/dashboard/dashboard.component'),
+        canActivate: [AuthGuard],
+      }
     ]
   },
   {

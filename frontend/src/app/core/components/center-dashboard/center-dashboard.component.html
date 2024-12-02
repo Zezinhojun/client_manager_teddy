@@ -1,0 +1,16 @@
+<div class="c-dashboard">
+  <div class="legend-list-card">
+    <p><b>{{totalClients()}}</b> clientes encontrados:</p>
+    <p>Clientes por página: Num</p>
+  </div>
+  <div class="cards-container">
+    <ng-content></ng-content>
+  </div>
+  <div>
+    @if(isFavoriteRoute()){
+    <button (click)="openDialog.emit('remove')" class="create-client">Limpar clientes selecionados</button>
+    } @else {
+    <button (click)="openDialog.emit('create')" class="create-client">Criar cliente</button>
+    }
+  </div>
+</div>

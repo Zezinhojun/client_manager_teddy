@@ -9,12 +9,13 @@
       <p>Empresa: {{client.companyValue | currency:'BRL'}}</p>
     </mat-card-content>
     <mat-card-footer class="card-footer">
-      <div class="card-action-btn">
+      <div class="card-action-btn" [ngClass]="{'end': isFavoriteRoute()}">
         <button class="action-btn">
           <mat-icon matChipRemove (click)="onAddClick.emit(client)">
             {{ isFavorite()(client) ? 'minimize' : 'add' }}
           </mat-icon>
         </button>
+        @if(!isFavoriteRoute()){
         <button class="action-btn">
           <mat-icon matChipRemove (click)="onEditClick.emit(client)">
             edit
@@ -25,6 +26,7 @@
             delete
           </mat-icon>
         </button>
+        }
       </div>
     </mat-card-footer>
   </mat-card>

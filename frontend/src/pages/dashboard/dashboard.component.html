@@ -1,16 +1,10 @@
 <main class="main">
   <div class="l-dashboard"></div>
-  <div class="c-dashboard">
-    <div class="legend-list-card">
-      <p><b>{{clientStore.totalClients()}}</b> clientes encontrados:</p>
-      <p>Clientes por página: Num</p>
-    </div>
-    <app-client-card [clients]="clientStore.clients()" [totalClients]="clientStore.totalClients()"
+  <app-center-dashboard [isFavoriteRoute]="isFavoriteRoute()" [totalClients]="totalClients()"
+    (openDialog)="openDialog($event)">
+    <app-client-card [isFavoriteRoute]="isFavoriteRoute()" [clients]="currentClients()" [totalClients]="totalClients()"
       (onAddClick)="addOrRemoveFavorityList($event)" (onEditClick)="openDialog('edit', $event)"
       (onRemoveClick)="confirmAndRemoveClient($event)" [isFavorite]="isFavorite()" />
-    <div>
-      <button (click)="openDialog('create')" class="create-client">Criar cliente</button>
-    </div>
-  </div>
+  </app-center-dashboard>
   <div class="r-dashboard"></div>
 </main>

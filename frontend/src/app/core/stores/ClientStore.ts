@@ -41,6 +41,11 @@ export const ClientStore = signalStore(
 
   })),
   withMethods((store, _clientSvc = inject(ClientService)) => ({
+    cleanFavorites() {
+      patchState(store, {
+        favoriteClients: []
+      })
+    },
 
     addToFavorites(client: Client) {
       patchState(store, {

@@ -94,7 +94,6 @@ export const AuthStore = signalStore(
     logout: rxMethod<void>(
       pipe(
         tap(() => {
-          console.log('Logout iniciado');
           patchState(store, { loading: true })
         }
         ),

@@ -16,4 +16,5 @@ export class ClientCardComponent {
   onAddClick = output<Client>()
   onEditClick = output<Client>()
   onRemoveClick = output<Client>()
+  isFavoriteRoute = input<boolean>(false)
 }

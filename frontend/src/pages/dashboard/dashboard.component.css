@@ -4,39 +4,3 @@
   grid-template-columns: 1fr 10fr 1fr;
   height: calc(100vh - 100px);
 }
-
-.c-dashboard .legend-list-card {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  margin: 1.5rem 1rem 0px 1rem;
-}
-
-.create-client {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  font-weight: 700;
-  background-color: #fff;
-  color: #EC6724;
-  border: 2.5px solid #EC6724;
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.create-client:hover {
-  background-color: #d9531e;
-  color: white;
-}
-
-button {
-  display: flex;
-  justify-content: center;
-  border: none;
-  background-color: transparent;
-}

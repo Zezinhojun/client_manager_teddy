@@ -18,7 +18,7 @@ import { AngularMaterialModule } from '../../app/shared/angular-material/angular
 })
 export default class MainLayoutComponent {
   authStore = inject(AuthStore)
-  _snackbarSvc = inject(SnackbarService)
+  private readonly _snackbarSvc = inject(SnackbarService)
   router = inject(Router)
   toogleMenu = signal<boolean>(false)
   navItens = signal<MenuItens[]>([
@@ -42,10 +42,10 @@ export default class MainLayoutComponent {
     );
     switch (action) {
       case 'clients':
-        console.log('clients')
+        this.router.navigate(['/dashboard'])
         return
       case 'clientsList':
-        console.log('clientsList');
+        this.router.navigate(['/clientlist'])
         return
       case 'logout':
         return this.handleLogout().subscribe({

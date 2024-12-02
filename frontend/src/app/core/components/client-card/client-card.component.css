@@ -93,3 +93,7 @@
   .delete-icon:hover {
     color: #d9531e
   }
+
+  .end {
+    justify-content: end;
+  }
