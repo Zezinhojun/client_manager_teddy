@@ -1,92 +1,95 @@
-.card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 285px));
-  justify-content: space-around;
-  grid-auto-rows: minmax(140px, auto);
-  gap: 1rem;
-  border-radius: 0 !important;
-}
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 285px));
+    justify-content: space-around;
+    grid-auto-rows: minmax(140px, auto);
+    gap: 1rem;
+    border-radius: 0 !important;
+  }
 
-.card-list.incomplete {
-  justify-content: start;
-}
+  .card-list.incomplete {
+    justify-content: start;
+  }
 
-.card {
-  width: 100%;
-  max-width: 285px;
-  height: 138px;
-  border-radius: 0 !important;
-}
+  .card {
+    width: 100%;
+    max-width: 285px;
+    height: 138px;
+    border-radius: 0 !important;
+  }
 
-.card-list>*:nth-child(n+20) {
-  display: none;
-}
+  .card-list>*:nth-child(n+20) {
+    display: none;
+  }
 
-mat-card-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  mat-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.mat-mdc-card-title,
-.mat-mdc-card-subtitle {
-  font-weight: 700;
-  font-size: 1rem
-}
+  .mat-mdc-card-title,
+  .mat-mdc-card-subtitle {
+    font-weight: 700;
+    font-size: 1rem
+  }
 
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 6px;
-}
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 6px;
+  }
 
-mat-card-content p {
-  margin: 2px 0;
-}
+  mat-card-content p {
+    margin: 2px 0;
+  }
 
-.card-action-btn {
-  display: flex;
-  justify-content: space-between;
-}
+  .card-action-btn {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.action-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer
-}
+  .action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer
+  }
 
-.action-btn:hover {
-  color: #d9531e;
-}
+  .action-btn:hover {
+    color: #d9531e;
+  }
 
 
-button {
-  display: flex;
-  justify-content: center;
-  border: none;
-  background-color: transparent;
-}
+  button {
+    display: flex;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+  }
 
-mat-icon-button {
-  display: flex;
-  justify-content: center;
+  mat-icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-}
+  }
 
-mat-icon {
-  font-size: 1.2rem;
-}
+  mat-icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+  }
 
-mat-icon .remove {
-  color: #EC6724
-}
+  mat-icon .remove {
+    color: #EC6724
+  }
 
-.delete-icon {
-  color: #EC6724;
-}
+  .delete-icon {
+    color: #EC6724;
+  }
 
-.delete-icon:hover {
-  color: #d9531e
-}
+  .delete-icon:hover {
+    color: #d9531e
+  }

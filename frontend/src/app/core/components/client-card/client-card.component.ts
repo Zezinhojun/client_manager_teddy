@@ -10,9 +10,10 @@ import { Client } from '../../stores/ClientStore';
   styleUrl: './client-card.component.css'
 })
 export class ClientCardComponent {
+  isFavorite = input<(client: Client) => boolean>(() => false);
   totalClients = input<number>()
   clients = input<Client[]>([])
-  onAddClick = output()
+  onAddClick = output<Client>()
   onEditClick = output<Client>()
   onRemoveClick = output<Client>()
 }

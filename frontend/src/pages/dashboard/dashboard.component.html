@@ -6,8 +6,8 @@
       <p>Clientes por página: Num</p>
     </div>
     <app-client-card [clients]="clientStore.clients()" [totalClients]="clientStore.totalClients()"
-      (onAddClick)="openDialog('create')" (onEditClick)="openDialog('edit', $event)"
-      (onRemoveClick)="confirmAndRemoveClient($event)" />
+      (onAddClick)="addOrRemoveFavorityList($event)" (onEditClick)="openDialog('edit', $event)"
+      (onRemoveClick)="confirmAndRemoveClient($event)" [isFavorite]="isFavorite()" />
     <div>
       <button (click)="openDialog('create')" class="create-client">Criar cliente</button>
     </div>

@@ -11,8 +11,8 @@
     <mat-card-footer class="card-footer">
       <div class="card-action-btn">
         <button class="action-btn">
-          <mat-icon matChipRemove (click)="onAddClick.emit()">
-            add
+          <mat-icon matChipRemove (click)="onAddClick.emit(client)">
+            {{ isFavorite()(client) ? 'minimize' : 'add' }}
           </mat-icon>
         </button>
         <button class="action-btn">

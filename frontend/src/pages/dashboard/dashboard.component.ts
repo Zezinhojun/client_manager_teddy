@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { AuthStore } from '../../app/core/stores/AuthStore';
 import { ClientCardComponent } from "../../app/core/components/client-card/client-card.component";
 import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
@@ -25,9 +25,25 @@ export default class DashboardComponent implements OnInit {
   private readonly _snackbarSvc = inject(SnackbarService)
   public authStore = inject(AuthStore)
   public clientStore = inject(ClientStore)
+  isFavorite = computed(() =>
+    (client: Client) => this.clientStore.favoriteClients().some(c => c.id === client.id)
+  )
 
   ngOnInit(): void {
     this.loadClients()
+  }
+
+  addOrRemoveFavorityList(client: Client) {
+    const isFavorite = this.clientStore.favoriteClients().some(c => c.id === client.id);
+    if (isFavorite) {
+      if (client.id) {
+        this.clientStore.removeFromFavorites(client.id);
+      } else {
+        console.warn('Cliente não possui um ID válido para remoção');
+      }
+    } else {
+      this.clientStore.addToFavorites(client)
+    }
   }
 
   removeClient(client: Client): void {

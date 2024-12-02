@@ -15,6 +15,7 @@ export interface Client {
 interface ClientState {
   clients: Client[];
   loading: boolean;
+  favoriteClients: Client[]
   error: string | null;
 }
 
@@ -23,9 +24,9 @@ export type ClientUpdateInput = {
   clientUpdateData: Client
 }
 
-
 const initialClientState: ClientState = {
   clients: [],
+  favoriteClients: [],
   loading: false,
   error: null,
 };
@@ -33,12 +34,25 @@ const initialClientState: ClientState = {
 export const ClientStore = signalStore(
   { providedIn: 'root' },
   withState(initialClientState),
-  withComputed(({ clients, error }) => ({
+  withComputed(({ clients, error, favoriteClients }) => ({
     totalClients: computed(() => clients().length),
+    totalFavoriteClients: computed(() => favoriteClients().length),
     hasError: computed(() => error() !== null)
 
   })),
   withMethods((store, _clientSvc = inject(ClientService)) => ({
+
+    addToFavorites(client: Client) {
+      patchState(store, {
+        favoriteClients: [...store.favoriteClients(), client]
+      })
+    },
+
+    removeFromFavorites(clientId: string) {
+      patchState(store, {
+        favoriteClients: store.favoriteClients().filter(client => client.id !== clientId)
+      })
+    },
 
     getClients: rxMethod<void>(
       pipe(
