@@ -1,10 +1,11 @@
 <main class="main">
   <div class="l-dashboard"></div>
   <app-center-dashboard [isFavoriteRoute]="isFavoriteRoute()" [totalClients]="totalClients()"
-    (openDialog)="openDialog($event)">
+    (openDialog)="openDialog($event)" (pageSizeChange)="onPageSizeChange($event)">
     <app-client-card [isFavoriteRoute]="isFavoriteRoute()" [clients]="currentClients()" [totalClients]="totalClients()"
       (onAddClick)="addOrRemoveFavorityList($event)" (onEditClick)="openDialog('edit', $event)"
       (onRemoveClick)="confirmAndRemoveClient($event)" [isFavorite]="isFavorite()" />
   </app-center-dashboard>
-  <div class="r-dashboard"></div>
+  <div class="r-dashboard">
+  </div>
 </main>

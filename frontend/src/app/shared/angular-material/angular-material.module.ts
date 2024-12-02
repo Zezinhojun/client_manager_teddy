@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   exports: [
     CommonModule,
@@ -43,7 +45,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatToolbarModule,
     MatListModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ]
 })
 export class AngularMaterialModule { }

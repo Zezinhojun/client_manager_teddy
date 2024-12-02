@@ -7,7 +7,14 @@
   } @else {
   <div class="legend-list-card">
     <p><b>{{totalClients()}}</b> clientes encontrados:</p>
-    <p>Clientes por página: Num</p>
+    <div class="client-show" style="display: flex; align-items: center; justify-items: center;">
+      <p class="client-show">Clientes por página: </p>
+      <select (change)="onSelectChange($event)" name="" id="">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option selected value="20">20</option>
+      </select>
+    </div>
   </div>
   }
 
@@ -23,5 +30,11 @@
     } @else {
     <button (click)="openDialog.emit('create')" class="create-client">Criar cliente</button>
     }
+  </div>
+  <div style="display: flex; justify-content: center">
+
+    <mat-paginator style="background-color: #f5f5f5;" #paginator (page)="handlePageEvent($event)"
+      [length]="totalClients()" [pageSize]="pageSize">
+    </mat-paginator>
   </div>
 </div>

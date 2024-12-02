@@ -18,7 +18,7 @@ import { ClientMessages } from '../../app/shared/utils/messages';
   imports: [
     AngularMaterialModule,
     ClientCardComponent,
-    CenterDashboardComponent
+    CenterDashboardComponent,
   ],
 
   templateUrl: './dashboard.component.html',
@@ -35,6 +35,11 @@ export default class DashboardComponent implements OnInit {
   public isFavorite = computed(() =>
     (client: Client) => this.clientStore.favoriteClients().some(c => c.id === client.id)
   )
+
+  onPageSizeChange(pageSize: number) {
+    console.log(pageSize)
+  }
+
   public currentClients = computed(() =>
     this.isFavoriteRoute()
       ? this.clientStore.favoriteClients()

@@ -18,7 +18,7 @@
     border-radius: 0 !important;
   }
 
-  .card-list>*:nth-child(n+20) {
+  .card-list>*:nth-child(n+21) {
     display: none;
   }
 
