@@ -49,7 +49,7 @@ Sistema de gerenciamento de clientes com tela inicial de login por nome, listage
 ### Clonar o Repositório
 
 ```bash 
-git clone https://github.seu-usuario/teddy-client-management.git 
+git clone https://github.com/Zezinhojun/client_manager_teddy
 ```
 ```bash 
 cd client_manager_teddy
@@ -75,7 +75,7 @@ API_URL=http://localhost:8080
 ### Iniciar Aplicação
 
 ```bash
- docker-compose up --build
+ docker-compose up 
 ```
 
 ## Funcionalidades
@@ -93,7 +93,7 @@ API_URL=http://localhost:8080
 
 Após executar o comando `docker-compose up --build`, a aplicação estará disponível nas seguintes portas:
 
-- Frontend (Angular): http://localhost:80/
+- Frontend (Angular): http://localhost:4200/
 - Backend (NestJS): http://localhost:8080/
 - Redis: Porta padrão (6379)
 - PostgreSQL: Porta padrão (5432)

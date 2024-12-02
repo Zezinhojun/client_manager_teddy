@@ -7,7 +7,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "${PORT_FRONT-80}:4200"
+      - "${PORT_FRONT-4200}:4200"
     environment:
       - API_URL=${API_URL}
     volumes:
