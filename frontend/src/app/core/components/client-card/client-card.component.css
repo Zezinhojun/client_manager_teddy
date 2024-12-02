@@ -97,3 +97,7 @@
   .end {
     justify-content: end;
   }
+
+  .mark {
+    color: #d9531e
+  }

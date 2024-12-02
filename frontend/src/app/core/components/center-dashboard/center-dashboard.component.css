@@ -5,13 +5,20 @@
   margin: 1.5rem 1rem 0px 1rem;
 }
 
+.no-clients {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
 .create-client {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
   font-weight: 700;
-  background-color: #fff;
+  background-color: transparent;
   color: #EC6724;
   border: 2.5px solid #EC6724;
   width: 100%;

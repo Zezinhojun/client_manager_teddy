@@ -10,6 +10,7 @@ import { SnackbarService } from '../../app/core/services/Snackbar-service/snackb
 import { ConfirmDialogComponent } from '../../app/core/components/confirm-dialog/confirm-dialog.component';
 import { CenterDashboardComponent } from "../../app/core/components/center-dashboard/center-dashboard.component";
 import { ActivatedRoute, Router } from '@angular/router';
+import { ClientMessages } from '../../app/shared/utils/messages';
 
 @Component({
   selector: 'app-dashboard',
@@ -49,35 +50,27 @@ export default class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.isFavoriteRoute.set(this.route.snapshot.url[0]?.path === 'clientlist');
-    if (this.clientStore.clients().length === 0) {
+    if (this.clientStore.totalClients() === 0) {
       this.loadClients();
     }
   }
 
-  addOrRemoveFavorityList(client: Client): void {
+  public addOrRemoveFavorityList(client: Client): void {
     const isFavorite = this.clientStore.favoriteClients().some(c => c.id === client.id);
     if (isFavorite) {
       if (client.id) {
         this.clientStore.removeFromFavorites(client.id);
+        this._snackbarSvc.show('Cliente removido da lista de favoritos')
       } else {
         console.warn('Cliente não possui um ID válido para remoção');
       }
     } else {
       this.clientStore.addToFavorites(client)
+      this._snackbarSvc.show('Cliente Adicionado a lista de favoritos')
     }
   }
 
-  removeClient(client: Client): void {
-    if (client.id) {
-      this.clientStore.removeClient(client.id);
-      this.handleClientOperation(
-        'Cliente excluído com sucesso!',
-        'Erro ao excluir cliente. Tente novamente.'
-      );
-    }
-  }
-
-  confirmAndRemoveClient(client: Client): void {
+  public confirmAndRemoveClient(client: Client): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       height: '150px',
@@ -97,11 +90,8 @@ export default class DashboardComponent implements OnInit {
     })
   }
 
-
-  openDialog(mode: 'create' | 'edit' | 'remove', client?: Client): void {
-
+  public openDialog(mode: 'create' | 'edit' | 'remove', client?: Client): void {
     if (mode === 'remove') return this.cleanFavoriteList()
-
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
       data: {
@@ -120,16 +110,17 @@ export default class DashboardComponent implements OnInit {
     })
   }
 
-  private loadClients(): void {
-    this.clientStore.getClients();
-  }
 
   private createClient(clientData: Client): void {
     this.clientStore.createClient(clientData);
     this.handleClientOperation(
-      'Cliente adicionado com sucesso!',
-      'Erro ao adicionar cliente. Tente novamente.'
+      ClientMessages.SUCCESS.CREATE,
+      ClientMessages.ERROR.CREATE
     );
+  }
+
+  private loadClients(): void {
+    this.clientStore.getClients();
   }
 
   private updateClient(clientUpdateData: Client): void {
@@ -139,10 +130,34 @@ export default class DashboardComponent implements OnInit {
         clientUpdateData: clientUpdateData
       });
       this.handleClientOperation(
-        'Dados do cliente atualizados com sucesso!',
-        'Erro ao atualizar dados do cliente. Tente novamente.'
+        ClientMessages.SUCCESS.UPDATE,
+        ClientMessages.ERROR.UPDATE
       );
     }
+  }
+
+  private removeClient(client: Client): void {
+    if (client.id) {
+      this.clientStore.removeClient(client.id);
+      this.handleClientOperation(
+        ClientMessages.SUCCESS.REMOVE,
+        ClientMessages.ERROR.REMOVE
+      );
+    }
+  }
+
+  private cleanFavoriteList(): void {
+    if (this.clientStore.totalFavoriteClients() === 0) {
+      this.router.navigate(['/dashboard'])
+      this._snackbarSvc.show('Lista não possui clientes')
+      return
+    }
+    this.clientStore.cleanFavorites()
+    this.handleClientOperation(
+      ClientMessages.SUCCESS.CLEAN_FAVORITES,
+      ClientMessages.ERROR.CLEAN_FAVORITES,
+    )
+    this.router.navigate(['/dashboard'])
   }
 
   private handleClientOperation(
@@ -152,28 +167,16 @@ export default class DashboardComponent implements OnInit {
       switchMap(async () => this.clientStore.loading()),
       first(loading => !loading),
       switchMap(async () => {
-        this._snackbarSvc.show(sucessMessage, 'Fechar')
+        this._snackbarSvc.show(sucessMessage)
         return of(null);
       }),
       catchError(err => {
-        this._snackbarSvc.show(errorMessage, 'Fechar');
+        this._snackbarSvc.show(errorMessage);
         return of(null)
       })
     ).subscribe()
   }
 
-  private cleanFavoriteList(): void {
-    if (this.clientStore.totalFavoriteClients() === 0) {
-      this.router.navigate(['/dashboard'])
-      this._snackbarSvc.show('Lista não possui clientes', 'Fechar')
-      return
-    }
-    this.clientStore.cleanFavorites()
-    this.handleClientOperation(
-      'Favoritos limpos com sucesso!',
-      "Erro ao limpar favoritos. Tente novamente."
-    )
-    this.router.navigate(['/dashboard'])
-  }
+
 
 }

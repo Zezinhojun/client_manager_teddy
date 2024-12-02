@@ -14,9 +14,10 @@ export type MenuItens = { label: string, active: boolean, action: string }
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  menuItemClick = output<string>();
-  sideMenu = output<boolean>();
-  username = input<string | null>(null);
-  navItens = input<MenuItens[]>([])
+  public onLogoClick = output()
+  public menuItemClick = output<string>();
+  public sideMenu = output<boolean>();
+  public username = input<string | null>(null);
+  public navItens = input<MenuItens[]>([])
 }
 

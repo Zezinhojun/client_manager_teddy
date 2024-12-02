@@ -61,6 +61,7 @@ mat-toolbar {
 
 .logo {
   margin-left: 8px;
+  cursor: pointer;
 }
 
 .greeting {

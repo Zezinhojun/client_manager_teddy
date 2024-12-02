@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 import { AngularMaterialModule } from '../../app/shared/angular-material/angular-material.module';
+import { ClientMessages } from '../../app/shared/utils/messages';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,7 @@ export default class HomeComponent implements OnInit {
     })
   }
 
-  defineCache(): void {
+  public defineCache(): void {
     if (this.form.valid) {
       this.authStore.setCache(this.form.get('username')?.value);
       interval(100).pipe(
@@ -47,10 +48,10 @@ export default class HomeComponent implements OnInit {
         first(loading => !loading),
         switchMap(async () => {
           if (this.authStore.isLoggedIn()) {
-            this.snackbar.show('Login bem sucedido!', 'Fechar')
+            this.snackbar.show(ClientMessages.SUCCESS.LOGIN)
             return this.router.navigate(['/dashboard'])
           } else {
-            this.snackbar.show('Falha no login, tente novamente.', 'Fechar')
+            this.snackbar.show(ClientMessages.ERROR.LOGIN)
             return this.router.navigate(['/home']);
           }
         })

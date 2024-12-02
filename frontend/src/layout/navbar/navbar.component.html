@@ -5,7 +5,7 @@
     </button>
   </div>
   <div class="center-nav">
-    <img src="assets/logo-teddy.png" alt="Logo" class="logo" height="50px" width="100px">
+    <img src="assets/logo-teddy.png" alt="Logo" class="logo" height="50px" width="100px" (click)="onLogoClick.emit()">
     <nav>
       <ul class="nav-list">
         @for (item of navItens(); track $index) {

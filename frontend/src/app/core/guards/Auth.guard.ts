@@ -13,7 +13,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
     switchMap(async () => {
       const isLoggedIn = authStore.isLoggedIn();
       if ((isLoggedIn && state.url === '/home') ||
-        (!isLoggedIn && state.url === '/dashboard')) {
+        (!isLoggedIn && (state.url === '/dashboard' || state.url === '/clientlist'))) {
         router.navigate(isLoggedIn ? ['/dashboard'] : ['/home']);
         return false;
       }

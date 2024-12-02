@@ -4,6 +4,7 @@ import { signalStore, withState, withComputed, withMethods, patchState } from "@
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
 import { pipe, tap, switchMap, map } from "rxjs";
 import { ClientService } from "../services/Client-service/client.service";
+import { ClientMessages } from "../../shared/utils/messages";
 
 export interface Client {
   id?: string
@@ -77,7 +78,7 @@ export const ClientStore = signalStore(
                   patchState(store, {
                     clients: [],
                     loading: false,
-                    error: err.message || 'Error loading client'
+                    error: ClientMessages.ERROR.LOAD || err.message
                   })
                 }
               })
@@ -104,7 +105,7 @@ export const ClientStore = signalStore(
               error: (err: Error) => {
                 patchState(store, {
                   loading: false,
-                  error: err.message || 'Erro ao remover cliente'
+                  error: ClientMessages.ERROR.REMOVE || err.message
                 });
               }
             })
@@ -131,7 +132,7 @@ export const ClientStore = signalStore(
               error: (err: Error) => {
                 patchState(store, {
                   loading: false,
-                  error: err.message || 'Erro ao criar cliente'
+                  error: ClientMessages.ERROR.CREATE || err.message
                 });
               }
             })
@@ -162,7 +163,7 @@ export const ClientStore = signalStore(
               error: (err: Error) => {
                 patchState(store, {
                   loading: false,
-                  error: err.message || 'Erro ao atualizar cliente'
+                  error: ClientMessages.ERROR.UPDATE || err.message
                 });
               }
             })

@@ -1,8 +1,19 @@
 <div class="c-dashboard">
+
+  @if (isFavoriteRoute()) {
+  <div class="legend-list-card">
+    <p><b>Clientes selecionados:</b></p>
+  </div>
+  } @else {
   <div class="legend-list-card">
     <p><b>{{totalClients()}}</b> clientes encontrados:</p>
     <p>Clientes por página: Num</p>
   </div>
+  }
+
+  @if (totalClients() === 0) {
+  <div class="no-clients">Não há clientes</div>
+  }
   <div class="cards-container">
     <ng-content></ng-content>
   </div>

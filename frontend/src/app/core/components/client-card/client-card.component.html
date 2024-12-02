@@ -11,7 +11,7 @@
     <mat-card-footer class="card-footer">
       <div class="card-action-btn" [ngClass]="{'end': isFavoriteRoute()}">
         <button class="action-btn">
-          <mat-icon matChipRemove (click)="onAddClick.emit(client)">
+          <mat-icon matChipRemove (click)="onAddClick.emit(client)" [ngClass]="{'mark': isFavorite()(client)}">
             {{ isFavorite()(client) ? 'minimize' : 'add' }}
           </mat-icon>
         </button>

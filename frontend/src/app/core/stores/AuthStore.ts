@@ -4,6 +4,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { AuthService } from '../services/Auth-service/Auth.service';
 import { tapResponse } from '@ngrx/operators';
+import { ClientMessages } from '../../shared/utils/messages';
 
 export type CacheResponse = {
   value: string;
@@ -105,13 +106,13 @@ export const AuthStore = signalStore(
                   patchState(store, {
                     username: null,
                     loading: false,
-                    error: 'logout error'
+                    error: ClientMessages.ERROR.LOGOUT
                   })
                 },
                 error: (err: Error) => {
                   patchState(store, {
                     loading: false,
-                    error: err.message || 'Logout error'
+                    error: err.message || ClientMessages.ERROR.LOGOUT
                   })
                 }
               })
