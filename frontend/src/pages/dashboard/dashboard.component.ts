@@ -37,47 +37,36 @@ export default class DashboardComponent implements OnInit {
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
-      data: { title: 'Criar cliente', buttonTitle: "Criar cliente" },
+      data: {
+        title: 'Criar cliente',
+        buttonTitle: "Criar cliente",
+      },
       panelClass: 'custom-modalBox',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.createClient(result)
-        interval(100).pipe(
-          switchMap(async () => this.clientStore.loading()),
-          first(loading => !loading),
-          switchMap(async () => {
-            this._snackbarSvc.show('Cliente criado com sucesso!', 'Fechar')
-            return of(null)
-          }),
-          catchError(err => {
-            this._snackbarSvc.show('Erro ao criar cliente. Tente novamente.', 'Fechar')
-            return of(null)
-          })
-        )
-          .subscribe()
       }
     });
   }
 
-  private createClient(clientData: Client) {
-    this.clientStore.createClient(clientData)
-  }
-
   openEditDialog(client: Client): void {
+    const isEdit = !!client.id
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
-      data: { title: 'Editar cliente', buttonTitle: "Editar cliente" },
+      data: {
+        title: 'Editar cliente',
+        buttonTitle: "Editar cliente",
+        client: client,
+        isEdit: isEdit
+      },
       panelClass: 'custom-modalBox',
     });
 
-    console.log(client)
-
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Formulário recebido:', result);
+        this.updateClient(result)
       }
     });
   }
@@ -99,6 +88,46 @@ export default class DashboardComponent implements OnInit {
       )
         .subscribe()
     }
+  }
+
+  private createClient(clientData: Client) {
+    this.clientStore.createClient(clientData)
+    interval(100).pipe(
+      switchMap(async () => this.clientStore.loading()),
+      first(loading => !loading),
+      switchMap(async () => {
+        this._snackbarSvc.show('Cliente criado com sucesso!', 'Fechar')
+        return of(null)
+      }),
+      catchError(err => {
+        this._snackbarSvc.show('Erro ao criar cliente. Tente novamente.', 'Fechar')
+        return of(null)
+      })
+    )
+      .subscribe()
+  }
+
+  private updateClient(clientUpdateData: Client) {
+    if (clientUpdateData.id) {
+      this.clientStore.updateClient({
+        clientId: clientUpdateData.id,
+        clientUpdateData: clientUpdateData
+      })
+      interval(100).pipe(
+        switchMap(async () => this.clientStore.loading()),
+        first(loading => !loading),
+        switchMap(async () => {
+          this._snackbarSvc.show('Cliente atualizado com sucesso!', 'Fechar')
+          return of(null)
+        }),
+        catchError(err => {
+          this._snackbarSvc.show('Erro ao atualizar cliente. Tente novamente.', 'Fechar')
+          return of(null)
+        })
+      )
+        .subscribe()
+    }
+
   }
 
 

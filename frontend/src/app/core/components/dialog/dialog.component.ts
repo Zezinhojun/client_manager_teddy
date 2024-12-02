@@ -42,9 +42,20 @@ export class DialogComponent {
   }
 
   onSubmit() {
-    if (this.clientForm.valid) {
-      this.dialogRef.close(this.clientForm.value);
+    const formValue = this.clientForm.value;
+    if (formValue.salary) {
+      formValue.salary = parseFloat(formValue.salary);
     }
+    if (formValue.companyValue) {
+      formValue.companyValue = parseFloat(formValue.companyValue);
+    }
+
+    if (this.data?.client?.id) {
+      formValue.id = this.data.client.id;
+    }
+
+    this.dialogRef.close(this.clientForm.value);
+
   }
 
   onCancel() {

@@ -1,9 +1,10 @@
 import { Crud, CrudController, CrudRequest, Override, ParsedRequest } from "@dataui/crud";
-import { Body, Controller, Post, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Param, Patch, Post, ValidationPipe } from "@nestjs/common";
 import { Client } from "../entity/client.entity";
 import { CreateClientDTO } from "../dtos/create-client.dto";
 import { ClientsService } from "../service/client.service";
 import { RedisService } from "src/cache/service/redis.service";
+import { DeepPartial } from "typeorm";
 
 @Crud({
     model: {
@@ -48,4 +49,19 @@ export class ClientsController implements CrudController<Client> {
         await this.service.deleteOne(req);
         await this.redisService.delete('clients');
     }
+
+    @Override('updateOneBase')
+    @Patch(':id')
+    async updateOne(
+        @ParsedRequest() req: CrudRequest,
+        @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+        dto: Partial<Client>
+    ): Promise<Client> {
+        const updatedClient = await this.service.updateOne(req, dto);
+        await this.redisService.delete('clients');
+        return updatedClient;
+    }
+
+
+
 }

@@ -23,4 +23,11 @@ export class ClientService {
   createClient(clientData: Client): Observable<Client> {
     return this._http.post<Client>(`${this.apiUrl}/clients/`, clientData)
   }
+
+  updateClient(clientId: string, clientUpdateData: Client): Observable<Client> {
+    if (!clientId) {
+      throw new Error('Client ID is required')
+    }
+    return this._http.patch<Client>(`${this.apiUrl}/clients/${clientId}`, clientUpdateData)
+  }
 }

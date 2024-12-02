@@ -2,7 +2,7 @@ import { computed, inject } from "@angular/core";
 import { tapResponse } from "@ngrx/operators";
 import { signalStore, withState, withComputed, withMethods, patchState } from "@ngrx/signals";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { pipe, tap, switchMap } from "rxjs";
+import { pipe, tap, switchMap, map } from "rxjs";
 import { ClientService } from "../services/Client-service/client.service";
 
 export interface Client {
@@ -17,6 +17,12 @@ interface ClientState {
   loading: boolean;
   error: string | null;
 }
+
+export type ClientUpdateInput = {
+  clientId: string,
+  clientUpdateData: Client
+}
+
 
 const initialClientState: ClientState = {
   clients: [],
@@ -113,8 +119,40 @@ export const ClientStore = signalStore(
           )
         )
       )
-    )
-
+    ),
+    updateClient: rxMethod<ClientUpdateInput>(
+      pipe(
+        tap(() => {
+          patchState(store, { loading: true });
+        }),
+        switchMap(({ clientId, clientUpdateData }) =>
+          _clientSvc.updateClient(clientId, clientUpdateData).pipe(
+            map((updatedClient: Client) => {
+              return store.clients().map(client =>
+                client.id === clientId ? updatedClient : client
+              );
+            }),
+            tapResponse({
+              next: (updatedClient: Client[]) => {
+                patchState(store, {
+                  clients: updatedClient,
+                  loading: false,
+                  error: null
+                });
+              },
+              error: (err: Error) => {
+                patchState(store, {
+                  loading: false,
+                  error: err.message || 'Erro ao atualizar cliente'
+                });
+              }
+            })
+          )
+        )
+      )
+    ),
   }))
-
 )
+
+
+
