@@ -36,9 +36,9 @@ export default class DashboardComponent implements OnInit {
     (client: Client) => this.clientStore.favoriteClients().some(c => c.id === client.id)
   )
 
-  onPageSizeChange(pageSize: number) {
-    console.log(pageSize)
-  }
+  // onPageSizeChange(pageSize: number) {
+  //   console.log(pageSize)
+  // }
 
   public currentClients = computed(() =>
     this.isFavoriteRoute()
