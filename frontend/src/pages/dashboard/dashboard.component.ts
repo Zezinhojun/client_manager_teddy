@@ -5,7 +5,7 @@ import { AngularMaterialModule } from '../../app/shared/angular-material/angular
 import { Client, ClientStore } from '../../app/core/stores/ClientStore';
 import { DialogComponent } from '../../app/core/components/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, first, interval, of, switchMap } from 'rxjs';
+import { catchError, first, interval, of, Subscription, switchMap } from 'rxjs';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
 
 @Component({
@@ -22,89 +22,52 @@ import { SnackbarService } from '../../app/core/services/Snackbar-service/snackb
 export default class DashboardComponent implements OnInit {
   private readonly dialog = inject(MatDialog)
   private readonly _snackbarSvc = inject(SnackbarService)
-  authStore = inject(AuthStore)
-  clientStore = inject(ClientStore)
-
+  public authStore = inject(AuthStore)
+  public clientStore = inject(ClientStore)
 
   ngOnInit(): void {
     this.loadClients()
   }
 
-  private loadClients() {
-    this.clientStore.getClients();
-  }
-
-  openCreateDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: {
-        title: 'Criar cliente',
-        buttonTitle: "Criar cliente",
-      },
-      panelClass: 'custom-modalBox',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.createClient(result)
-      }
-    });
-  }
-
-  openEditDialog(client: Client): void {
-    const isEdit = !!client.id
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: {
-        title: 'Editar cliente',
-        buttonTitle: "Editar cliente",
-        client: client,
-        isEdit: isEdit
-      },
-      panelClass: 'custom-modalBox',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.updateClient(result)
-      }
-    });
-  }
-
-  removeClient(client: Client) {
+  removeClient(client: Client): void {
     if (client.id) {
-      this.clientStore.removeClient(client.id)
-      interval(100).pipe(
-        switchMap(async () => this.clientStore.loading()),
-        first(loading => !loading),
-        switchMap(async () => {
-          this._snackbarSvc.show('Cliente removido com sucesso!', 'Fechar');
-          return of(null);
-        }),
-        catchError(err => {
-          this._snackbarSvc.show('Erro ao remover cliente. Tente novamente.', 'Fechar')
-          return of(null);
-        })
-      )
-        .subscribe()
+      this.clientStore.removeClient(client.id);
+      this.handleClientOperation(
+        'Cliente removido com sucesso!',
+        'Erro ao remover cliente. Tente novamente.'
+      );
     }
   }
 
-  private createClient(clientData: Client) {
-    this.clientStore.createClient(clientData)
-    interval(100).pipe(
-      switchMap(async () => this.clientStore.loading()),
-      first(loading => !loading),
-      switchMap(async () => {
-        this._snackbarSvc.show('Cliente criado com sucesso!', 'Fechar')
-        return of(null)
-      }),
-      catchError(err => {
-        this._snackbarSvc.show('Erro ao criar cliente. Tente novamente.', 'Fechar')
-        return of(null)
-      })
-    )
-      .subscribe()
+  openDialog(mode: 'create' | 'edit', client?: Client): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: {
+        title: mode === 'create' ? 'Criar client' : 'Editar client',
+        buttonTitle: mode === 'create' ? 'Criar client' : 'Editar client',
+        client: mode === 'edit' ? client : null,
+        isEdit: mode === 'edit'
+      },
+      panelClass: 'custom-modalBox'
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        mode === 'create' ? this.createClient(result) : this.updateClient(result)
+      }
+    })
+  }
+
+  private loadClients(): void {
+    this.clientStore.getClients();
+  }
+
+  private createClient(clientData: Client): void {
+    this.clientStore.createClient(clientData);
+    this.handleClientOperation(
+      'Cliente criado com sucesso!',
+      'Erro ao criar cliente. Tente novamente.'
+    );
   }
 
   private updateClient(clientUpdateData: Client) {
@@ -112,23 +75,28 @@ export default class DashboardComponent implements OnInit {
       this.clientStore.updateClient({
         clientId: clientUpdateData.id,
         clientUpdateData: clientUpdateData
-      })
-      interval(100).pipe(
-        switchMap(async () => this.clientStore.loading()),
-        first(loading => !loading),
-        switchMap(async () => {
-          this._snackbarSvc.show('Cliente atualizado com sucesso!', 'Fechar')
-          return of(null)
-        }),
-        catchError(err => {
-          this._snackbarSvc.show('Erro ao atualizar cliente. Tente novamente.', 'Fechar')
-          return of(null)
-        })
-      )
-        .subscribe()
+      });
+      this.handleClientOperation(
+        'Cliente atualizado com sucesso!',
+        'Erro ao atualizar cliente. Tente novamente.'
+      );
     }
-
   }
 
-
+  private handleClientOperation(
+    sucessMessage: string,
+    errorMessage: string): Subscription {
+    return interval(100).pipe(
+      switchMap(async () => this.clientStore.loading()),
+      first(loading => !loading),
+      switchMap(async () => {
+        this._snackbarSvc.show(sucessMessage, 'Fechar')
+        return of(null);
+      }),
+      catchError(err => {
+        this._snackbarSvc.show(errorMessage, 'Fechar');
+        return of(null)
+      })
+    ).subscribe()
+  }
 }

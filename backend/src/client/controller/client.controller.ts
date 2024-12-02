@@ -1,10 +1,10 @@
 import { Crud, CrudController, CrudRequest, Override, ParsedRequest } from "@dataui/crud";
-import { Body, Controller, Param, Patch, Post, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Patch, Post, ValidationPipe } from "@nestjs/common";
 import { Client } from "../entity/client.entity";
 import { CreateClientDTO } from "../dtos/create-client.dto";
 import { ClientsService } from "../service/client.service";
 import { RedisService } from "src/cache/service/redis.service";
-import { DeepPartial } from "typeorm";
+
 
 @Crud({
     model: {
