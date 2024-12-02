@@ -67,7 +67,7 @@ export const AuthStore = signalStore(
                 next: (result: CacheResponse | null) => {
                   if (result?.value) {
                     patchState(store, {
-                      username: result.value,
+                      username: JSON.parse(result.value),
                       loading: false,
                       error: null
                     })

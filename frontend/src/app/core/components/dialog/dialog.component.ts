@@ -2,14 +2,19 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { AngularMaterialModule } from '../../../shared/angular-material/angular-material.module';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 
 @Component({
   selector: 'app-dialog',
   standalone: true,
   imports: [
-    AngularMaterialModule, ReactiveFormsModule],
-  templateUrl: './dialog.component.html',
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    NgxMaskDirective],
+  providers: [
+    provideNgxMask()
+  ], templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent {

@@ -27,6 +27,7 @@
     "@ngrx/signals": "^18.1.1",
     "client-manager-teddy": "file:",
     "express": "^4.18.2",
+    "ngx-mask": "^19.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

@@ -11,9 +11,11 @@ import { SnackbarService } from '../../app/core/services/Snackbar-service/snackb
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AngularMaterialModule,
-    ClientCardComponent
+  imports: [
+    AngularMaterialModule,
+    ClientCardComponent,
   ],
+
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -39,13 +41,30 @@ export default class DashboardComponent implements OnInit {
       panelClass: 'custom-modalBox',
     });
 
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Formulário recebido:', result);
+        this.createClient(result)
+        interval(100).pipe(
+          switchMap(async () => this.clientStore.loading()),
+          first(loading => !loading),
+          switchMap(async () => {
+            this._snackbarSvc.show('Cliente criado com sucesso!', 'Fechar')
+            return of(null)
+          }),
+          catchError(err => {
+            this._snackbarSvc.show('Erro ao criar cliente. Tente novamente.', 'Fechar')
+            return of(null)
+          })
+        )
+          .subscribe()
       }
     });
   }
+
+  private createClient(clientData: Client) {
+    this.clientStore.createClient(clientData)
+  }
+
   openEditDialog(client: Client): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',

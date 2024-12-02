@@ -24,10 +24,8 @@ export class ClientsController implements CrudController<Client> {
         @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
         createClientDto: CreateClientDTO
     ): Promise<Client> {
-
         const client = this.service.createEmployee(createClientDto)
-        const allClients = await this.service.find();
-        await this.redisService.set('clients', allClients, 2 * 60 * 60)
+        await this.redisService.delete('clients');
         return client
     }
 

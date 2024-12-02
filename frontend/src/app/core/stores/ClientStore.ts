@@ -88,6 +88,33 @@ export const ClientStore = signalStore(
       )
     ),
 
+    createClient: rxMethod<Client>(
+      pipe(
+        tap(() => {
+          patchState(store, { loading: true });
+        }),
+        switchMap((clientData) =>
+          _clientSvc.createClient(clientData).pipe(
+            tapResponse({
+              next: (createdClient: Client) => {
+                patchState(store, {
+                  clients: [...store.clients(), createdClient],
+                  loading: false,
+                  error: null
+                });
+              },
+              error: (err: Error) => {
+                patchState(store, {
+                  loading: false,
+                  error: err.message || 'Erro ao criar cliente'
+                });
+              }
+            })
+          )
+        )
+      )
+    )
+
   }))
 
 )

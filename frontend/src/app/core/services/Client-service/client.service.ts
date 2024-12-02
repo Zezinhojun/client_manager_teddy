@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { Client } from '../../stores/ClientStore';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -17,5 +18,9 @@ export class ClientService {
 
   removeClient(clientId: string) {
     return this._http.delete(`${this.apiUrl}/clients/${clientId}`)
+  }
+
+  createClient(clientData: Client): Observable<Client> {
+    return this._http.post<Client>(`${this.apiUrl}/clients/`, clientData)
   }
 }
