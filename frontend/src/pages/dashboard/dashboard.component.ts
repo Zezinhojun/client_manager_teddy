@@ -7,6 +7,7 @@ import { DialogComponent } from '../../app/core/components/dialog/dialog.compone
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, first, interval, of, Subscription, switchMap } from 'rxjs';
 import { SnackbarService } from '../../app/core/services/Snackbar-service/snackbar.service';
+import { ConfirmDialogComponent } from '../../app/core/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,12 +40,32 @@ export default class DashboardComponent implements OnInit {
     }
   }
 
+  confirmAndRemoveClient(client: Client): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      height: '150px',
+      data: {
+        clientUsername: client.name,
+        buttonTitle: 'Excluir cliente',
+        dialogTitle: 'Excluir cliente',
+        isConfirm: true
+      },
+      panelClass: 'custom-modalBox'
+    })
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.removeClient(client)
+      }
+    })
+
+  }
   openDialog(mode: 'create' | 'edit', client?: Client): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '400px',
       data: {
-        title: mode === 'create' ? 'Criar client' : 'Editar client',
-        buttonTitle: mode === 'create' ? 'Criar client' : 'Editar client',
+        title: mode === 'create' ? 'Criar cliente' : 'Editar cliente',
+        buttonTitle: mode === 'create' ? 'Criar cliente' : 'Editar cliente',
         client: mode === 'edit' ? client : null,
         isEdit: mode === 'edit'
       },

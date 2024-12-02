@@ -1,62 +1,62 @@
-.dialog-header {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr auto;
-  width: 100%;
-}
+  .dialog-header {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+  }
 
-.dialog-title {
-  margin: 0;
-  font-size: 1rem;
-}
+  .dialog-title {
+    margin: 0;
+    font-size: 1rem;
+  }
 
-.start {
-  font-weight: 700;
-  justify-self: start;
-}
+  .start {
+    font-weight: 700;
+    justify-self: start;
+  }
 
-.end {
-  display: flex;
-  align-items: center;
-  padding: 0px;
-  background-color: transparent;
-  font-size: 16px;
-  border: 0px;
-  justify-self: end;
-  cursor: pointer;
-}
+  .end {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    background-color: transparent;
+    font-size: 16px;
+    border: 0px;
+    justify-self: end;
+    cursor: pointer;
+  }
 
-mat-icon:hover {
-  color: #d9531e;
-}
+  mat-icon:hover {
+    color: #d9531e;
+  }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-mat-dialog-actions {
-  display: block !important;
-}
+  mat-dialog-actions {
+    display: block !important;
+  }
 
-.save-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  font-weight: 700;
-  background-color: #EC6724;
-  color: #fff;
-  border: 2.5px solid #EC6724;
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
+  .save-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #EC6724;
+    color: #fff;
+    border: 2.5px solid #EC6724;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
 
-.save-btn:hover {
-  background-color: #d9531e;
-  border-color: #d9531e;
-}
+  .save-btn:hover {
+    background-color: #d9531e;
+    border-color: #d9531e;
+  }

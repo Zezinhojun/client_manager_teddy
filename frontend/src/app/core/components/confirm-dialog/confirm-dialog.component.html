@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <div class="dialog-header">
+    <h2 class="dialog-title start">{{ dialogTitle }}:</h2>
+    <button (click)="onCancel()" class="end">
+      <mat-icon>
+        close
+      </mat-icon>
+    </button>
+  </div>
+  <mat-dialog-actions>
+    <p class="confirmation-message">Você está prestes a excluir o cliente: <b>{{clientUsername | twoFirstNames|
+        titlecase}}</b></p>
+    <button type="submit" (click)="onSubmit()" class="save-btn">{{buttonTitle}}</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

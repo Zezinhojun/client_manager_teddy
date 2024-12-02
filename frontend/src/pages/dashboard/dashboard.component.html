@@ -7,7 +7,7 @@
     </div>
     <app-client-card [clients]="clientStore.clients()" [totalClients]="clientStore.totalClients()"
       (onAddClick)="openDialog('create')" (onEditClick)="openDialog('edit', $event)"
-      (onRemoveClick)="removeClient($event)" />
+      (onRemoveClick)="confirmAndRemoveClient($event)" />
     <div>
       <button (click)="openDialog('create')" class="create-client">Criar cliente</button>
     </div>
